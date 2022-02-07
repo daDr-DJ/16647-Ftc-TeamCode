@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Autonomous
 //@Disabled
 
-public class RedPark extends LinearOpMode {
+public class RedDuck extends LinearOpMode {
 
     DcMotor LF;
     DcMotor LB;
@@ -37,20 +37,16 @@ public class RedPark extends LinearOpMode {
 //change these things
         closeServo();
         lineUp();
-
-    }
-    void closeServo () {
-        G.setPosition(0);
-    }
-    void openServo () {
-        G.setPosition(1);
+        turn(390, -0.5, 0.5);
+        move(1250, 0.5);
+        oneDuck();
+        sleep(1000);
+        move(500, -0.5);
     }
     void lineUp () {
         move(900, 0.5);
         turn(1350, -0.5, 0.5);
-        move(850, 0.5);
     }
-
     void move(int milliseconds, double power) {
         LF.setPower(power);
         RF.setPower(power);
@@ -74,8 +70,14 @@ public class RedPark extends LinearOpMode {
         RB.setPower(0);
     }
     void oneDuck () {
-        D.setPower(0.2);
+        D.setPower(-0.2);
         sleep(750);
         D.setPower(0);
+    }
+    void closeServo () {
+        G.setPosition(0);
+    }
+    void openServo () {
+        G.setPosition(1);
     }
 }
