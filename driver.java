@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.configuration.annotations.ServoType;
 
 
 @TeleOp
@@ -16,8 +17,8 @@ public class driver extends LinearOpMode {
     DcMotor RF;
     DcMotor RB;
     DcMotor A;
-    DcMotor D;
-    Servo G;
+    Servo GA;
+    Servo GB;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,10 +27,10 @@ public class driver extends LinearOpMode {
         LB = hardwareMap.dcMotor.get("left back");
         RB = hardwareMap.dcMotor.get("right back");
         A = hardwareMap.dcMotor.get("arm");
-        D = hardwareMap.dcMotor.get("duck");
-        G = hardwareMap.servo.get("grabber");
+        GA = hardwareMap.servo.get("wheel1");
+        GB = hardwareMap.servo.get("wheel2");
 
-        //S.setDirection(DcMotor.Direction.REVERSE);
+
         RF.setDirection(DcMotor.Direction.REVERSE);
         RB.setDirection(DcMotor.Direction.REVERSE);
 
@@ -37,46 +38,32 @@ public class driver extends LinearOpMode {
 
         while (opModeIsActive()) {
             //driving
-            double l = gamepad1.left_stick_y;
-            double r = gamepad1.right_stick_y;
+            double ly = gamepad1.left_stick_y;
+            double ry = gamepad1.right_stick_y;
+            double lx = gamepad1.left_stick_x;
+            double rx = gamepad1.right_stick_x;
             double p = 0.5;
             //---------------------------------------------------
 
             if (gamepad1.left_bumper) {
-                LF.setPower(l);
-                LB.setPower(l);
-                RF.setPower(r);
-                RB.setPower(r);
+                LF.setPower((ly)-(lx));
+                LB.setPower((ly)+(lx));
+                RF.setPower((ry)+(rx));
+                RB.setPower((ry)-(rx));
             } else {
-                LF.setPower(l * p);
-                LB.setPower(l * p);
-                RF.setPower(r * p);
-                RB.setPower(r * p);
+                LF.setPower((ly)*p-(lx)*p);
+                LB.setPower((ly)*p+(lx)*p);
+                RF.setPower((ry)*p+(rx)*p);
+                RB.setPower((ry)*p-(rx)*p);
             }
+
+
             //---------------------------------------------------------
 
-            //arm
-            /*
-            boolean active = false;
-            if (gamepad2.a && active==false) {
-                active = true;
-                A.setPower(0.3);
-                sleep(1100);
-                A.setPower(0);
-                active = false;
-            }
-            if (gamepad2.b && active==false) {
-                active = true;
-                A.setPower(-0.3);
-                sleep(1000);
-                A.setPower(0);
-                active = false;
-            }
-            */
-            if (gamepad2.right_trigger>0.05) {
+            if (gamepad2.right_trigger>0.1) {
                 A.setPower(0.3);
             } else
-            if (gamepad2.left_trigger>0.05) {
+            if (gamepad2.left_trigger>0.1) {
                 A.setPower(-0.3);
             } else {
                 A.setPower(0);
@@ -84,28 +71,17 @@ public class driver extends LinearOpMode {
             //-----------------------------------------------------------
 
             //grabber
-            if (gamepad2.x) {
-                G.setPosition(0);
+            if (gamepad2.right_bumper) {
+                GA.setPosition(-1);
+                GB.setPosition(-1);
             }
-            if (gamepad2.y) {
-                G.setPosition(1);
+            if (gamepad2.left_bumper) {
+                GA.setPosition(1);
+                GB.setPosition(1);
             }
             //---------------------------------------------------------
 
-            //duckwheel
-            if (gamepad2.dpad_right) {
-                D.setPower(-0.13);
-            }
-            if (gamepad2.dpad_left) {
-                D.setPower(0.13);
-            }
-            if (gamepad2.dpad_down) {
-                D.setPower(0);
-            }
-            //-----------------------------------------------------
-
-
-
+            
 
         }
     }
