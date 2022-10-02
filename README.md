@@ -1,7 +1,11 @@
 TeamCode for Trivium Undefined's Robot throuought each season.
 
-Repository created by Me.
+**Installation**
+-After downloading you can copy and paste the extracted folder into the FTC SDK
 
-Code written by Max , Christian and I.
+**Credit**
+-Repository created by Me.
+-Code written by Max, Christian and I.
 
-If you download our code plz give us credit in comments or any other way.
+**MUST DO!!**
+-If you download our code plz give us credit in comments or any other way.
