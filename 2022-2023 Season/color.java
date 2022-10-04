@@ -29,8 +29,8 @@ public class hngh extends LinearOpMode{
 
         cs = hardwareMap.get(ColorSensor.class, "color sensor");
 
-        lb.setDirection(DcMotorSimple.Direction.REVERSE);
-        lf.setDirection(DcMotorSimple.Direction.REVERSE);
+        rb.setDirection(DcMotorSimple.Direction.REVERSE);
+        rf.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
