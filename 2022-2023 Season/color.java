@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name="color sensor test", group="")
 //@Disabled
-public class hngh extends LinearOpMode{
+public class color extends LinearOpMode{
 
     DcMotor lb;
     DcMotor lf;
