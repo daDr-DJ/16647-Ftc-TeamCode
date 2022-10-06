@@ -31,8 +31,8 @@ public class driver extends LinearOpMode {
         GB = hardwareMap.servo.get("wheel2");
 
 
-        RF.setDirection(DcMotor.Direction.REVERSE);
-        RB.setDirection(DcMotor.Direction.REVERSE);
+        LF.setDirection(DcMotor.Direction.REVERSE);
+        LB.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
 
