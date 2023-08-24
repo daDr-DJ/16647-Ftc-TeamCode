@@ -18,7 +18,7 @@ public class driver_copy extends LinearOpMode {
     DcMotor RF;
     DcMotor RB;
 
-    DcMotor SR; //SL,SR;
+    DcMotor SL,SR;
     List<DcMotor> SD;
 
     Servo AL;
@@ -28,7 +28,7 @@ public class driver_copy extends LinearOpMode {
     Servo CL;
     Servo CR;
     double open = 0.53;
-    double closed = 0.469;
+    double closed = 0.4589;
     double LiftStartTime = 0;
     double ReturnStartTime = 0;
 
@@ -57,7 +57,7 @@ public class driver_copy extends LinearOpMode {
         RB = hardwareMap.dcMotor.get("right back");
 
         //linear slides
-        //SL = hardwareMap.dcMotor.get("slide left");
+        SL = hardwareMap.dcMotor.get("slide left");
         SR = hardwareMap.dcMotor.get("slide right");
 
         //Arm
@@ -83,21 +83,12 @@ public class driver_copy extends LinearOpMode {
 
 
 
-        SD = Arrays.asList(SR);//SL,SR);
-
-        //for (DcMotor slide : SD){
-            //slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            //slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //}
-
+        SD = Arrays.asList(SL,SR);//SL,SR);
 
 
         waitForStart();
 
         while (opModeIsActive()) {
-
-
-
 
             Mechnum_Drive();
 
@@ -111,7 +102,7 @@ public class driver_copy extends LinearOpMode {
         double ry = gamepad1.right_stick_y;
         double lx = gamepad1.left_stick_x;
         double rx = gamepad1.right_stick_x;
-        double armstick = gamepad2.right_stick_y;
+
 
         //Forward & Back
         if (gamepad1.left_bumper) {
@@ -128,87 +119,70 @@ public class driver_copy extends LinearOpMode {
             RB.setPower((ry) * p - (rx) * p);
         }
 
-        Line_Strech();
+
         Operations();
 
     }
     public void Operations() {
 
-        //Arm
-        if (gamepad2.dpad_up) {
-            AL.setPosition(0.54);
-            AR.setPosition(0.54);
-            telemetry.addData("Keypad", "Arm is up");
-
-        } else if (gamepad2.dpad_down) {
-            AL.setPosition(0.4);
-            AR.setPosition(0.4);
-            telemetry.addData("Keypad", "Arm is Down");
-        } else if (gamepad2.dpad_left) {
-            AL.setPosition(0);
-            AR.setPosition(0);
-            telemetry.addData("Keypad", "Arm is Low");
-        } else if (gamepad2.dpad_right) {
-            AL.setPosition(0);
-            AR.setPosition(0);
-            telemetry.addData("Keypad", "Arm is Mid");
-        }
-
         //Claw
-        if (gamepad2.left_bumper) {
+        if (gamepad1.left_bumper) {
             CL.setPosition(open);
             telemetry.addData("Keypad", "Claw = Open");
 
-        } else if (gamepad2.right_bumper) {
+        } else if (gamepad1.right_bumper) {
             CL.setPosition(closed);
             telemetry.addData("Keypad", "Claw = Closed");
         }
-    }
 
-        public void Line_Strech() {
-        //Slide controls
+        //Arm
+        if (gamepad2.dpad_up) {
+            AL.setPosition(1);
+            AR.setPosition(1);
+            telemetry.addData("Keypad", "Arm is up");
 
-        //if (gamepad2.b) {
-      //      S_pos = reset;
+        } else if (gamepad2.dpad_down) {
+            AL.setPosition(0.3);
+            AR.setPosition(0.21);
+            telemetry.addData("Keypad", "Arm is Down");
 
-       // } else if (gamepad2.a) {
-           // S_pos = ground;
-
-        //} else if (gamepad2.x) {
-            //S_pos = low;
-
-        //} else if (gamepad2.y) {
-            //S_pos = mid;
+        } //else if (gamepad2.dpad_left) {
+            //AL.setPosition(0.95);
+            //AR.setPosition(0.8);
+            //telemetry.addData("Keypad", "Arm is Low");
+       // }
+        // else if (gamepad2.dpad_right) {
+            //AL.setPosition(0.3);
+            //AR.setPosition(0.21);
+            //telemetry.addData("Keypad", "Arm is Mid");
         //}
 
-        if (gamepad2.right_trigger >= 0.4 ) {
-           // S_pos = S_pos + 10;
-            for (DcMotor slide: SD) {
-                slide.setPower(0.2); // Down
+        //Linear
+        double armstick = gamepad2.left_stick_y;
+        if (gamepad2.left_trigger >= 0.25) {
+
+            for (DcMotor slide : SD) {
+                slide.setPower(0.4); // Down
             }
 
 
-    } else if (gamepad2.left_trigger >= 0.4 ) {
-            //S_pos = S_pos - 10;
-            for (DcMotor slide: SD) {
-                slide.setPower(-0.2);// Up
-            }
-            }
-    }
+        } else if (gamepad2.right_trigger >= 0.4) {
 
-    public boolean LiftCooldown() {
-        if(getRuntime() - LiftStartTime > 0.25) { //Must wait 250 milliseconds before input can be used again
-            LiftStartTime = getRuntime();
-            return true;
+            for (DcMotor slide : SD) {
+                slide.setPower(-0.4);// Up
+            }
+
+        } else {
+
+            for (DcMotor slide : SD) {
+                slide.setPower(-0.04);// no
+            }
+
         }
-        return false;
-    }
 
-    public boolean ReturnCooldown() {
-        if(getRuntime() - ReturnStartTime > 0.25) { //Must wait 250 milliseconds before input can be used again
-            ReturnStartTime = getRuntime();
-            return true;
-        }
-        return false;
+
     }
 }
+
+
+

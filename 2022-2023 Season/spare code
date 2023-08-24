@@ -1,0 +1,25 @@
+// if (S_pos == low) {
+                //AL.setPosition(0.8);
+                //AR.setPosition(0.8);
+            //}
+            //else if (S_pos == ) {
+                //GA.setPower(0.35);
+                //GB.setPower(0.35);
+            //}
+           // else {
+                //GA.setPower(0);
+           // }\
+
+
+
+           //ndk {
+                           //abiFilters "armeabi-v7a", "arm64-v8a"
+                       //}
+
+           //ndk {
+                           //abiFilters "armeabi-v7a", "arm64-v8a"
+                       //}
+
+           //currentpos = S_pos;
+                       //for (DcMotor slide : SD){
+                       //slide.setPower(0.2);
